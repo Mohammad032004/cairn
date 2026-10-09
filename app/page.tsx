@@ -2,8 +2,14 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowDownRight, ArrowUpRight, Check } from "lucide-react";
+import {
+  ArrowDownRight,
+  ArrowUpRight,
+  Check,
+} from "lucide-react";
+
 import AIAgentVisual from "@/components/hero/AIAgentVisual";
+import SelectedWork from "@/components/sections/SelectedWork";
 
 const capabilities = [
   "Software Engineering",
@@ -49,7 +55,10 @@ export default function HomePage() {
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
+            transition={{
+              duration: 0.7,
+              ease: "easeOut",
+            }}
             className="relative z-10 mx-auto w-full max-w-[620px] lg:mx-0"
           >
             {/* Eyebrow */}
@@ -84,7 +93,7 @@ export default function HomePage() {
               into products people can use.
             </p>
 
-            {/* Actions */}
+            {/* CTA buttons */}
             <div className="mt-9 flex flex-wrap items-center gap-3">
               <a
                 href="#contact"
@@ -171,13 +180,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Temporary anchors for sections we will build next */}
-      <div className="sr-only" aria-hidden="true">
-        <span id="services">Services</span>
-        <span id="work">Selected work</span>
-        <span id="about">About CAIRN</span>
-        <span id="contact">Contact CAIRN</span>
-      </div>
+      {/* SELECTED WORK */}
+      <SelectedWork />
+
+      {/* Remaining sections will be added next:
+          Services, Approach, About, Contact and Footer. */}
     </main>
   );
 }
