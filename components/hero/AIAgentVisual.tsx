@@ -3,14 +3,10 @@
 
 import { motion } from "framer-motion";
 import {
-  Activity,
-  Bot,
+  ArrowUpRight,
   BrainCircuit,
   Check,
-  ChevronRight,
-  CircleDashed,
   Code2,
-  Database,
   GitBranch,
   Search,
   ShieldCheck,
@@ -20,335 +16,319 @@ import {
 } from "lucide-react";
 
 const agents = [
-  { name: "Planner", detail: "Breaking down the task", icon: BrainCircuit, color: "#82B5FF" },
-  { name: "Researcher", detail: "Gathering context", icon: Search, color: "#A99AFF" },
-  { name: "Coder", detail: "Writing implementation", icon: Code2, color: "#72D5FF" },
-  { name: "Reviewer", detail: "Checking quality", icon: ShieldCheck, color: "#75E0BD" },
+  {
+    name: "Research Agent",
+    role: "Understand the problem",
+    icon: Search,
+    color: "#8AB8FF",
+    position: "left",
+  },
+  {
+    name: "Engineering Agent",
+    role: "Build intelligent solutions",
+    icon: Code2,
+    color: "#79D7FF",
+    position: "right",
+  },
+  {
+    name: "Quality Agent",
+    role: "Review and validate",
+    icon: ShieldCheck,
+    color: "#79E2C0",
+    position: "left",
+  },
+  {
+    name: "Workflow Agent",
+    role: "Connect every step",
+    icon: Workflow,
+    color: "#B7A4FF",
+    position: "right",
+  },
 ];
 
-const steps = ["Plan", "Research", "Build", "Test", "Deploy"];
+function AgentCard({
+  agent,
+  index,
+}: {
+  agent: (typeof agents)[number];
+  index: number;
+}) {
+  const Icon = agent.icon;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 14 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        duration: 0.55,
+        delay: 0.35 + index * 0.12,
+      }}
+      whileHover={{ y: -4, borderColor: `${agent.color}70` }}
+      className="relative z-10 rounded-xl border border-white/10 bg-[#0C2038]/95 p-3 shadow-[0_14px_35px_rgba(0,0,0,0.18)] backdrop-blur-md sm:p-4"
+    >
+      <div className="flex items-start gap-3">
+        <div
+          className="flex size-9 shrink-0 items-center justify-center rounded-lg"
+          style={{
+            backgroundColor: `${agent.color}18`,
+            color: agent.color,
+          }}
+        >
+          <Icon size={17} />
+        </div>
+
+        <div className="min-w-0 flex-1">
+          <p className="text-[11px] font-semibold text-white sm:text-xs">
+            {agent.name}
+          </p>
+          <p className="mt-1 text-[10px] leading-4 text-slate-400">
+            {agent.role}
+          </p>
+        </div>
+
+        <span
+          className="mt-1 size-1.5 shrink-0 rounded-full"
+          style={{
+            backgroundColor: agent.color,
+            boxShadow: `0 0 10px ${agent.color}70`,
+          }}
+        />
+      </div>
+
+      <div className="mt-4 flex items-center justify-between border-t border-white/[0.07] pt-3">
+        <span className="font-mono text-[9px] uppercase tracking-wider text-slate-500">
+          Agent 0{index + 1}
+        </span>
+
+        <span className="flex items-center gap-1 text-[9px] text-slate-300">
+          <Check size={10} style={{ color: agent.color }} />
+          Ready
+        </span>
+      </div>
+    </motion.div>
+  );
+}
 
 export default function AIAgentVisual() {
   return (
-    <div className="relative mx-auto w-full max-w-[650px] select-none">
-      {/* Ambient lighting */}
-      <div className="pointer-events-none absolute left-1/2 top-[42%] h-[310px] w-[310px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/[0.12] blur-[100px]" />
+    <div className="relative mx-auto w-full max-w-[620px]">
+      {/* Ambient blue light */}
+      <div className="pointer-events-none absolute left-1/2 top-1/2 size-[300px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/10 blur-[100px] sm:size-[420px]" />
 
-      {/* Agent workspace */}
-      <div className="relative overflow-hidden rounded-2xl border border-blue-200/[0.14] bg-[#08172B] shadow-[0_35px_100px_rgba(0,0,0,0.4)]">
-        {/* Window bar */}
-        <div className="flex h-12 items-center justify-between border-b border-white/[0.08] px-4">
-          <div className="flex items-center gap-2">
-            <div className="flex size-6 items-center justify-center rounded-md bg-blue-400/15 text-blue-300">
-              <Sparkles size={13} />
+      {/* Main composition */}
+      <div className="relative overflow-hidden rounded-2xl border border-blue-200/[0.13] bg-[#08172A] p-4 sm:p-6">
+        {/* Technical grid */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-30"
+          style={{
+            backgroundImage:
+              "radial-gradient(rgba(120,170,255,.4) 1px, transparent 1px)",
+            backgroundSize: "22px 22px",
+            maskImage:
+              "linear-gradient(to bottom, black, transparent 95%)",
+          }}
+        />
+
+        {/* Composition header */}
+        <div className="relative z-10 flex items-center justify-between gap-3 border-b border-white/[0.09] pb-4">
+          <div className="flex items-center gap-3">
+            <div className="flex size-8 items-center justify-center rounded-lg border border-blue-300/20 bg-blue-400/10 text-blue-300">
+              <BrainCircuit size={17} />
             </div>
-            <span className="text-[11px] font-semibold tracking-wide text-slate-100">
-              CAIRN <span className="text-blue-300">/ AGENTS</span>
-            </span>
+
+            <div>
+              <p className="text-xs font-semibold text-white">
+                CAIRN Intelligence
+              </p>
+              <p className="mt-1 text-[9px] text-slate-400">
+                Multi-agent system
+              </p>
+            </div>
           </div>
 
-          <div className="flex items-center gap-2">
-            <span className="size-1.5 rounded-full bg-emerald-400" />
-            <span className="font-mono text-[9px] text-slate-400">
-              SYSTEM ONLINE
+          <span className="flex items-center gap-2 rounded-full border border-emerald-300/15 bg-emerald-300/[0.05] px-2.5 py-1.5">
+            <span className="size-1.5 rounded-full bg-emerald-300" />
+            <span className="text-[9px] text-emerald-200">
+              System ready
             </span>
-          </div>
+          </span>
         </div>
 
-        {/* Workspace content */}
-        <div className="p-4 sm:p-5">
-          <div className="flex items-start justify-between gap-3">
-            <div>
-              <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-blue-300/70">
-                Autonomous workspace
-              </p>
-              <h2 className="mt-2 text-lg font-medium tracking-tight text-white sm:text-xl">
-                Agent orchestration
-              </h2>
-              <p className="mt-1 text-[11px] text-slate-400">
-                Intelligent systems. Working together.
-              </p>
-            </div>
+        {/* Agent network */}
+        <div className="relative mt-5">
+          {/* Connection SVG */}
+          <svg
+            viewBox="0 0 520 410"
+            preserveAspectRatio="none"
+            className="pointer-events-none absolute inset-0 z-0 h-full w-full"
+            fill="none"
+            aria-hidden="true"
+          >
+            <defs>
+              <linearGradient id="cairn-agent-flow">
+                <stop stopColor="#629CFF" stopOpacity=".12" />
+                <stop offset=".5" stopColor="#78BCFF" stopOpacity=".9" />
+                <stop offset="1" stopColor="#629CFF" stopOpacity=".12" />
+              </linearGradient>
+            </defs>
 
-            <div className="rounded-lg border border-white/10 p-2 text-slate-300">
-              <Workflow size={16} />
-            </div>
-          </div>
-
-          {/* Main AI visualization */}
-          <div className="relative mt-5 overflow-hidden rounded-xl border border-blue-300/10 bg-[#061326]">
-            {/* Grid */}
-            <div
-              className="pointer-events-none absolute inset-0 opacity-30"
-              style={{
-                backgroundImage:
-                  "radial-gradient(rgba(89,154,255,.45) 1px, transparent 1px)",
-                backgroundSize: "19px 19px",
-              }}
+            <path
+              d="M120 85 C175 85 175 170 260 205"
+              stroke="url(#cairn-agent-flow)"
+              strokeWidth="1.4"
+            />
+            <path
+              d="M400 85 C345 85 345 170 260 205"
+              stroke="url(#cairn-agent-flow)"
+              strokeWidth="1.4"
+            />
+            <path
+              d="M120 325 C175 325 175 245 260 205"
+              stroke="url(#cairn-agent-flow)"
+              strokeWidth="1.4"
+            />
+            <path
+              d="M400 325 C345 325 345 245 260 205"
+              stroke="url(#cairn-agent-flow)"
+              strokeWidth="1.4"
             />
 
-            {/* Connection paths */}
-            <svg
-              viewBox="0 0 500 300"
-              preserveAspectRatio="xMidYMid meet"
-              className="absolute inset-0 h-full w-full"
-              fill="none"
-              aria-hidden="true"
-            >
-              <defs>
-                <linearGradient id="agent-line">
-                  <stop stopColor="#497BFF" stopOpacity=".15" />
-                  <stop offset=".5" stopColor="#65B5FF" stopOpacity=".95" />
-                  <stop offset="1" stopColor="#497BFF" stopOpacity=".2" />
-                </linearGradient>
-              </defs>
+            <circle cx="260" cy="205" r="82" stroke="#5D9EFF" strokeOpacity=".14" strokeDasharray="3 7" />
+            <circle cx="260" cy="205" r="106" stroke="#5D9EFF" strokeOpacity=".1" strokeDasharray="2 9" />
+          </svg>
 
-              <path d="M250 145 C190 120 170 70 95 72" stroke="url(#agent-line)" strokeWidth="1.2" />
-              <path d="M250 145 C310 120 330 70 405 72" stroke="url(#agent-line)" strokeWidth="1.2" />
-              <path d="M250 145 C190 175 170 230 95 230" stroke="url(#agent-line)" strokeWidth="1.2" />
-              <path d="M250 145 C310 175 330 230 405 230" stroke="url(#agent-line)" strokeWidth="1.2" />
+          <div className="relative z-10 grid grid-cols-[1fr_72px_1fr] items-center gap-x-2 gap-y-8 sm:grid-cols-[1fr_100px_1fr] sm:gap-x-4 sm:gap-y-10">
+            {/* Upper-left agent */}
+            <AgentCard agent={agents[0]} index={0} />
 
-              {[95, 405].map((x) => (
-                <g key={x}>
-                  <circle cx={x} cy="72" r="3" fill="#6AB8FF" />
-                  <circle cx={x} cy="230" r="3" fill="#6AB8FF" />
-                </g>
-              ))}
-
-              <circle cx="250" cy="145" r="74" stroke="#4285FF" strokeOpacity=".15" strokeDasharray="3 7" />
-              <circle cx="250" cy="145" r="94" stroke="#4285FF" strokeOpacity=".1" strokeDasharray="2 9" />
-            </svg>
-
-            {/* Agent node positions */}
-            <div className="relative grid min-h-[290px] grid-cols-[1fr_104px_1fr] grid-rows-[1fr_1fr] items-center gap-x-1 px-3 py-5 sm:min-h-[320px] sm:grid-cols-[1fr_128px_1fr] sm:px-5">
-              {/* Planner */}
+            {/* Intelligence core */}
+            <div className="relative col-start-2 row-span-2 flex aspect-square items-center justify-center">
               <motion.div
-                animate={{ y: [0, -3, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="z-10 self-end rounded-lg border border-blue-300/15 bg-[#0B1D35]/95 p-2.5 sm:p-3"
-              >
-                <div className="flex items-center gap-2">
-                  <BrainCircuit size={15} className="shrink-0 text-blue-300" />
-                  <span className="text-[10px] font-medium text-slate-100 sm:text-[11px]">
-                    Planner
-                  </span>
-                </div>
-                <p className="mt-2 text-[9px] leading-4 text-slate-400">
-                  Decomposing task
-                </p>
-                <div className="mt-2 h-1 overflow-hidden rounded-full bg-white/10">
-                  <motion.div
-                    animate={{ width: ["20%", "85%", "45%", "75%"] }}
-                    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                    className="h-full rounded-full bg-blue-400"
-                  />
-                </div>
-              </motion.div>
+                animate={{ rotate: 360 }}
+                transition={{
+                  duration: 28,
+                  repeat: Infinity,
+                  ease: "linear",
+                }}
+                className="absolute inset-0 rounded-full border border-dashed border-blue-300/30"
+              />
 
-              {/* Central AI core */}
-              <div className="relative col-start-2 row-span-2 row-start-1 flex aspect-square items-center justify-center">
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 32, repeat: Infinity, ease: "linear" }}
-                  className="absolute inset-0 rounded-full border border-dashed border-blue-300/25"
-                />
+              <motion.div
+                animate={{ rotate: -360 }}
+                transition={{
+                  duration: 19,
+                  repeat: Infinity,
+                  ease: "linear",
+                }}
+                className="absolute inset-[9px] rounded-full border border-blue-300/20"
+              />
 
-                <motion.div
-                  animate={{ rotate: -360 }}
-                  transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
-                  className="absolute inset-[10px] rounded-full border border-blue-300/20"
-                />
+              <motion.div
+                animate={{
+                  scale: [1, 1.05, 1],
+                  boxShadow: [
+                    "0 0 20px rgba(61,137,255,.12)",
+                    "0 0 42px rgba(61,137,255,.28)",
+                    "0 0 20px rgba(61,137,255,.12)",
+                  ],
+                }}
+                transition={{
+                  duration: 3.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="absolute inset-[17px] rounded-[19px] border border-blue-300/45 bg-gradient-to-br from-blue-400/20 via-blue-500/10 to-indigo-500/20"
+                style={{ transform: "rotate(45deg)" }}
+              />
 
-                <motion.div
-                  animate={{ scale: [1, 1.045, 1] }}
-                  transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute inset-[20px] rounded-[24px] border border-blue-300/60 bg-gradient-to-br from-blue-400/20 via-blue-500/10 to-indigo-500/20 shadow-[0_0_38px_rgba(55,130,255,0.25)]"
-                  style={{ transform: "rotate(45deg)" }}
-                />
-
-                <div className="relative z-10 flex size-12 items-center justify-center rounded-2xl border border-blue-200/40 bg-[#102E55] text-blue-200 shadow-[0_0_32px_rgba(60,145,255,0.3)] sm:size-14">
-                  <motion.div
-                    animate={{ scale: [1, 1.12, 1] }}
-                    transition={{ duration: 2.5, repeat: Infinity }}
-                  >
-                    <BrainCircuit size={25} strokeWidth={1.5} />
-                  </motion.div>
-                </div>
-
-                {/* Orbiting signal */}
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 7, repeat: Infinity, ease: "linear" }}
-                  className="absolute inset-0"
-                >
-                  <span className="absolute left-1/2 top-0 size-2 -translate-x-1/2 rounded-full bg-sky-300 shadow-[0_0_12px_#60A5FA]" />
-                </motion.div>
+              <div className="relative z-10 flex size-9 items-center justify-center rounded-xl border border-blue-200/50 bg-[#153967] text-blue-100 shadow-[0_0_24px_rgba(75,150,255,0.35)] sm:size-12">
+                <Sparkles size={21} />
               </div>
 
-              {/* Researcher */}
-              <motion.div
-                animate={{ y: [0, 3, 0] }}
-                transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
-                className="z-10 col-start-3 row-start-1 self-end rounded-lg border border-indigo-300/15 bg-[#0B1D35]/95 p-2.5 sm:p-3"
+              <motion.span
+                animate={{ rotate: 360 }}
+                transition={{
+                  duration: 8,
+                  repeat: Infinity,
+                  ease: "linear",
+                }}
+                className="absolute inset-0"
               >
-                <div className="flex items-center gap-2">
-                  <Search size={14} className="shrink-0 text-indigo-300" />
-                  <span className="text-[10px] font-medium text-slate-100 sm:text-[11px]">
-                    Research
-                  </span>
-                </div>
-                <p className="mt-2 text-[9px] leading-4 text-slate-400">
-                  Finding context
-                </p>
-                <div className="mt-2 flex gap-1">
-                  <span className="h-1 w-1/3 rounded-full bg-indigo-300/80" />
-                  <span className="h-1 w-1/4 rounded-full bg-indigo-300/40" />
-                  <span className="h-1 w-1/5 rounded-full bg-white/10" />
-                </div>
-              </motion.div>
-
-              {/* Coder */}
-              <motion.div
-                animate={{ y: [0, 3, 0] }}
-                transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut" }}
-                className="z-10 col-start-1 row-start-2 self-start rounded-lg border border-sky-300/15 bg-[#0B1D35]/95 p-2.5 sm:p-3"
-              >
-                <div className="flex items-center gap-2">
-                  <Code2 size={14} className="shrink-0 text-sky-300" />
-                  <span className="text-[10px] font-medium text-slate-100 sm:text-[11px]">
-                    Coder
-                  </span>
-                </div>
-                <p className="mt-2 text-[9px] leading-4 text-slate-400">
-                  Generating code
-                </p>
-                <div className="mt-2 flex gap-1">
-                  <span className="h-1 w-1/4 rounded-full bg-sky-300" />
-                  <span className="h-1 w-1/3 rounded-full bg-sky-300/50" />
-                </div>
-              </motion.div>
-
-              {/* Reviewer */}
-              <motion.div
-                animate={{ y: [0, -3, 0] }}
-                transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut" }}
-                className="z-10 col-start-3 row-start-2 self-start rounded-lg border border-emerald-300/15 bg-[#0B1D35]/95 p-2.5 sm:p-3"
-              >
-                <div className="flex items-center gap-2">
-                  <ShieldCheck size={14} className="shrink-0 text-emerald-300" />
-                  <span className="text-[10px] font-medium text-slate-100 sm:text-[11px]">
-                    Reviewer
-                  </span>
-                </div>
-                <p className="mt-2 text-[9px] leading-4 text-slate-400">
-                  Validating output
-                </p>
-                <div className="mt-2 flex items-center gap-1.5">
-                  <Check size={10} className="text-emerald-300" />
-                  <span className="text-[9px] text-emerald-300">Quality check</span>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-
-          {/* Live workflow */}
-          <div className="mt-3 rounded-xl border border-white/[0.09] bg-white/[0.025] p-4 sm:p-5">
-            <div className="flex items-center justify-between gap-3">
-              <div className="flex items-center gap-2">
-                <GitBranch size={14} className="text-blue-300" />
-                <span className="text-[11px] font-medium text-white">
-                  Execution pipeline
-                </span>
-              </div>
-              <span className="font-mono text-[9px] text-blue-200">
-                LIVE PREVIEW
-              </span>
+                <span className="absolute left-1/2 top-0 size-2 -translate-x-1/2 rounded-full bg-sky-200 shadow-[0_0_12px_#60A5FA]" />
+              </motion.span>
             </div>
 
-            <div className="mt-5 flex items-start">
-              {steps.map((step, index) => (
-                <div key={step} className="flex min-w-0 flex-1 flex-col items-center">
-                  <div className="flex w-full items-center">
-                    {index > 0 && (
-                      <div className="h-px flex-1 bg-blue-400/50" />
-                    )}
+            {/* Upper-right agent */}
+            <AgentCard agent={agents[1]} index={1} />
 
-                    <motion.div
-                      animate={
-                        index === 3
-                          ? { boxShadow: ["0 0 0px #3B82F6", "0 0 12px #3B82F6", "0 0 0px #3B82F6"] }
-                          : {}
-                      }
-                      transition={{ duration: 2, repeat: Infinity }}
-                      className={`flex size-6 shrink-0 items-center justify-center rounded-full border ${
-                        index < 3
-                          ? "border-blue-400 bg-blue-400 text-[#071426]"
-                          : index === 3
-                            ? "border-blue-300 text-blue-200"
-                            : "border-white/20 text-slate-500"
-                      }`}
-                    >
-                      {index < 3 ? (
-                        <Check size={12} />
-                      ) : index === 3 ? (
-                        <CircleDashed size={13} />
-                      ) : (
-                        <span className="text-[9px]">{index + 1}</span>
-                      )}
-                    </motion.div>
+            {/* Lower-left agent */}
+            <AgentCard agent={agents[2]} index={2} />
 
-                    {index < steps.length - 1 && (
-                      <div className="h-px flex-1 bg-white/10" />
-                    )}
-                  </div>
-
-                  <span className="mt-2 text-[9px] text-slate-300 sm:text-[10px]">
-                    {step}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Current activity */}
-          <div className="mt-3 flex items-center justify-between gap-3 rounded-xl border border-white/[0.08] bg-[#0B1B30] px-4 py-3">
-            <div className="flex min-w-0 items-center gap-3">
-              <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-blue-400/10 text-blue-300">
-                <Activity size={15} />
-              </div>
-              <div className="min-w-0">
-                <p className="text-[10px] font-medium text-slate-200">
-                  Agents collaborating
-                </p>
-                <p className="mt-1 truncate text-[9px] text-slate-400">
-                  Planning → Building → Validation
-                </p>
-              </div>
-            </div>
-
-            <div className="flex shrink-0 items-center gap-1.5">
-              <Zap size={12} className="text-blue-300" />
-              <span className="text-[10px] text-blue-200">Orchestrated</span>
-            </div>
+            {/* Lower-right agent */}
+            <AgentCard agent={agents[3]} index={3} />
           </div>
         </div>
 
-        {/* Decorative edge */}
-        <div className="pointer-events-none absolute -bottom-8 -right-8 size-24 rounded-full border border-blue-400/10" />
+        {/* Main task */}
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.85, duration: 0.5 }}
+          className="relative z-10 mt-6 rounded-xl border border-blue-300/15 bg-gradient-to-r from-blue-400/[0.09] to-indigo-400/[0.04] p-4"
+        >
+          <div className="flex items-start gap-3">
+            <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-blue-400/10 text-blue-300">
+              <GitBranch size={15} />
+            </div>
+
+            <div className="min-w-0 flex-1">
+              <p className="text-[11px] font-medium text-white">
+                One coordinated workflow
+              </p>
+              <p className="mt-1 text-[10px] leading-5 text-slate-400">
+                Research, engineering, review, and automation working toward a shared goal.
+              </p>
+            </div>
+
+            <ArrowUpRight size={15} className="shrink-0 text-blue-300" />
+          </div>
+        </motion.div>
+
+        {/* Footer */}
+        <div className="relative z-10 mt-4 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <Zap size={12} className="text-blue-300" />
+            <span className="font-mono text-[9px] uppercase tracking-wider text-slate-400">
+              Intelligence by design
+            </span>
+          </div>
+
+          <span className="text-[9px] text-slate-500">
+            Concept visualization
+          </span>
+        </div>
       </div>
 
       {/* Floating label */}
       <motion.div
         animate={{ y: [0, -5, 0] }}
-        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+        transition={{
+          duration: 4.5,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
         className="absolute -right-2 -top-4 hidden items-center gap-2 rounded-lg border border-blue-300/20 bg-[#102440] px-3 py-2.5 shadow-xl sm:flex lg:-right-5"
       >
-        <span className="flex size-6 items-center justify-center rounded-md bg-blue-400/15 text-blue-200">
-          <Bot size={14} />
-        </span>
+        <div className="flex size-7 items-center justify-center rounded-md bg-blue-400/10 text-blue-300">
+          <Zap size={14} />
+        </div>
         <div>
-          <p className="text-[10px] font-medium text-white">AI orchestration</p>
-          <p className="mt-0.5 text-[9px] text-slate-400">Multi-agent workflow</p>
+          <p className="text-[10px] font-medium text-white">
+            Agent collaboration
+          </p>
+          <p className="mt-1 text-[9px] text-slate-400">
+            One connected system
+          </p>
         </div>
       </motion.div>
     </div>
